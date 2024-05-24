@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import edu.cjc.springbootrestapicrudapp.app.exception.ProductNotFoundException;
 import edu.cjc.springbootrestapicrudapp.app.model.Product;
 import edu.cjc.springbootrestapicrudapp.app.repository.ProductRepository;
 import edu.cjc.springbootrestapicrudapp.app.servicei.ProductServiceI;
@@ -54,6 +55,19 @@ public class ProductServiceImpl implements ProductServiceI{
 	public void deleteProduct(Integer productId) {
 		
 		pr.deleteById(productId);
+	}
+
+	@Override
+	public Product getProductByName(String productName) {
+	Product p=pr.findByProductName(productName);
+	if(p!=null)
+	{
+		return p;
+	}
+	else
+	{
+		throw new ProductNotFoundException("Product Not Available");
+	}
 	}
 
 	
